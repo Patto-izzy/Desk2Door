@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sourcing Dashboard - Desk2Door</title>
+    <meta name="description" content="View and manage customer school list submissions, adjust quotation statuses, and coordinate home delivery runs in Kigali.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- STICKY HEADER -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Desk2Door Logo" class="logo-icon-img">
+                Desk2Door
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="header-actions">
+                <a href="https://wa.me/250795124101?text=Hi%20Desk2Door%2C%20I%27d%20like%20to%20place%20an%20order." class="btn btn-secondary" target="_blank" rel="noopener">WhatsApp Order</a>
+                <a href="order.html" class="btn btn-primary">Order Online</a>
+            </div>
+            
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN DASHBOARD WRAPPER -->
+    <main class="admin-container">
+        <div class="container">
+            
+            <!-- Dashboard Title Row -->
+            <div class="admin-header-row reveal">
+                <div>
+                    <span class="tag tag-green">Management Board</span>
+                    <h1>Sourcing Orders Admin</h1>
+                    <p>Review submitted lists, coordinate quotations, and dispatch all sourcing orders throughout Kigali.</p>
+                </div>
+                <div>
+                    <button id="injectMockDataBtn" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.65rem 1.25rem; display: inline-flex; align-items: center; gap: 6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        Load Sample Orders
+                    </button>
+                    <button id="clearAllOrdersBtn" class="btn btn-outline" style="font-size: 0.85rem; padding: 0.65rem 1.25rem; border-color: #EF4444; color: #EF4444;">
+                        Clear Board
+                    </button>
+                </div>
+            </div>
+
+            <!-- Analytical Cards Row -->
+            <div class="admin-stats-grid reveal delay-100">
+                <!-- Total Orders -->
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon flex-center">
+                        <svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="12" y1="12" x2="12" y2="21"></line></svg>
+                    </div>
+                    <div class="admin-stat-info">
+                        <p>Total Lists</p>
+                        <h3 id="statTotalOrders">0</h3>
+                    </div>
+                </div>
+                
+                <!-- Pending Quotes -->
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon amber flex-center">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                    <div class="admin-stat-info">
+                        <p>Pending Quote</p>
+                        <h3 id="statPendingQuotes">0</h3>
+                    </div>
+                </div>
+
+                <!-- Active Sourcing -->
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon flex-center" style="background-color: var(--accent); color: var(--primary-light);">
+                        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                    <div class="admin-stat-info">
+                        <p>In Progress</p>
+                        <h3 id="statActiveSourcing">0</h3>
+                    </div>
+                </div>
+
+                <!-- Estimated Revenue -->
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon green flex-center">
+                        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <div class="admin-stat-info">
+                        <p>Est. Value</p>
+                        <h3 id="statEstRevenue">0 RWF</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Filter & Search Controls -->
+            <div class="admin-table-controls reveal delay-200">
+                <div class="admin-search-wrapper">
+                    <!-- Simple Search Icon SVG -->
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="adminSearchInput" placeholder="Search by parent, school, or order ID...">
+                </div>
+                
+                <div class="admin-filters">
+                    <button class="admin-filter-btn active" data-filter="all">All</button>
+                    <button class="admin-filter-btn" data-filter="Pending">Pending</button>
+                    <button class="admin-filter-btn" data-filter="Quoting">Quoting</button>
+                    <button class="admin-filter-btn" data-filter="Purchasing">Purchasing</button>
+                    <button class="admin-filter-btn" data-filter="Out for Delivery">Out for Delivery</button>
+                    <button class="admin-filter-btn" data-filter="Completed">Completed</button>
+                </div>
+            </div>
+
+            <!-- Main Order Grid Table -->
+            <div class="table-wrapper reveal delay-300">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Customer Name</th>
+                            <th>Category / Details</th>
+                            <th>List Method</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th style="text-align: right;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminOrderTableBody">
+                        <!-- Populated dynamically via JS -->
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: var(--text-light); padding: var(--space-xl) 0;">
+                                No orders logged yet. Submit a shopping list or load sample orders to test!
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ADMIN INSPECTION DETAIL MODAL -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="admin-modal" id="adminDetailModal">
+        <div class="modal-header">
+            <h3 style="color: var(--primary);">Review Sourcing Order</h3>
+            <span class="modal-close" id="modalCloseBtn">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="modal-detail-grid">
+                
+                <!-- Order Metadata -->
+                <div class="modal-detail-item">
+                    <h4>Order Reference</h4>
+                    <p id="modalOrderId" style="font-weight: 700; color: var(--primary-light);"></p>
+                </div>
+                <div class="modal-detail-item">
+                    <h4>Submitted Date</h4>
+                    <p id="modalOrderDate"></p>
+                </div>
+
+                <!-- Customer Details -->
+                <div class="modal-detail-item">
+                    <h4>Customer Name</h4>
+                    <p id="modalParentName" style="font-weight: 600;"></p>
+                </div>
+                <div class="modal-detail-item">
+                    <h4>Contact Phone</h4>
+                    <p id="modalPhone"></p>
+                </div>
+
+                <!-- Category & Sourcing Details -->
+                <div class="modal-detail-item">
+                    <h4>Sourcing Category</h4>
+                    <p id="modalCategory" style="font-weight: 600;"></p>
+                </div>
+                <div class="modal-detail-item">
+                    <h4>Payment Method</h4>
+                    <p id="modalPayment"></p>
+                </div>
+
+                <!-- Conditional School Details (shown only for Study Kits) -->
+                <div class="modal-detail-item" id="modalSchoolRow">
+                    <h4>School Name</h4>
+                    <p id="modalSchoolName"></p>
+                </div>
+                <div class="modal-detail-item" id="modalClassRow">
+                    <h4>Student Class / Tier</h4>
+                    <p id="modalStudentClass"></p>
+                </div>
+
+                <!-- Attached File or Typed List -->
+                <div class="modal-detail-item modal-detail-full" id="modalFileRow">
+                    <h4>Uploaded List Document</h4>
+                    <div class="modal-file-preview">
+                         <span class="modal-file-icon">
+                             <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                         </span>
+                        <div>
+                            <p id="modalFileName" style="font-weight: 600; font-size: 0.9rem;"></p>
+                            <span id="modalFileSize" style="font-size: 0.75rem; color: var(--text-light);"></span>
+                        </div>
+                        <a href="#" id="modalFileDownloadBtn" class="btn btn-outline" style="padding: 4px 8px; font-size: 0.75rem; margin-left: auto;" download>Inspect File</a>
+                    </div>
+                </div>
+
+                <!-- Typed List (shown when customer typed list instead of uploading) -->
+                <div class="modal-detail-item modal-detail-full" id="modalTypedListRow" style="display:none;">
+                    <h4>Typed Shopping List</h4>
+                    <pre id="modalTypedList" style="background-color: var(--bg-alt); padding: var(--space-sm); border-radius: var(--radius-sm); border: 1.5px solid var(--border-color); font-family: inherit; font-size: 0.875rem; white-space: pre-wrap; max-height: 160px; overflow-y: auto;"></pre>
+                </div>
+
+                <!-- Delivery Details -->
+                <div class="modal-detail-item modal-detail-full">
+                    <h4>Delivery Location (Kigali)</h4>
+                    <p id="modalDeliveryAddress" style="background-color: var(--bg-alt); padding: var(--space-sm); border-radius: var(--radius-sm); border: 1.5px solid var(--border-color);"></p>
+                </div>
+
+                <!-- Notes -->
+                <div class="modal-detail-item modal-detail-full">
+                    <h4>Special Sourcing Request Notes</h4>
+                    <p id="modalNotes" style="font-style: italic; color: var(--text-muted);"></p>
+                </div>
+
+                <!-- Status Update Control -->
+                <div class="modal-detail-item modal-detail-full" style="border-top: 1.5px solid var(--border-color); padding-top: var(--space-md); margin-top: var(--space-sm);">
+                    <label for="modalStatusSelect" class="form-label" style="margin-bottom: var(--space-xs);">Update Sourcing Status</label>
+                    <select id="modalStatusSelect" class="form-control" style="background-color: var(--white);">
+                        <option value="Pending">Pending Review</option>
+                        <option value="Quoting">Drafting Quotation</option>
+                        <option value="Purchasing">Purchasing Materials</option>
+                        <option value="Out for Delivery">Out for Delivery</option>
+                        <option value="Completed">Completed & Paid</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="modalDeleteBtn" class="btn btn-outline" style="border-color: #EF4444; color: #EF4444; margin-right: auto;">Delete Order</button>
+            <button id="modalCancelBtn" class="btn btn-outline">Close</button>
+            <button id="modalSaveBtn" class="btn btn-primary">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="grid-4 footer-top">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <img src="images/logo.png" alt="Desk2Door Logo" class="logo-icon-img">
+                        Desk2Door
+                    </a>
+                    <p class="footer-desc">Providing personal shopping, procurement, custom packaging, and delivery services for school kits, office restocks, home essentials, and custom lists across Kigali.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="services.html">Study Tool Kits</a></li>
+                        <li><a href="services.html">Home Essentials</a></li>
+                        <li><a href="services.html">Office Essentials</a></li>
+                        <li><a href="services.html">List2Door (Custom Sourcing)</a></li>
+                        <li><a href="order.html">Send Shopping List</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Admin Role</h4>
+                    <p style="font-size: 0.85rem; color: #94A3B8;">This dashboard runs completely on client-side state. Perfect for operational mockups and local deployments.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Desk2Door. All Rights Reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="admin.html">Admin Dashboard</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
+

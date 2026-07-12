@@ -1,0 +1,19 @@
+{
+  "name": "Desk2Door - Customized Study Tool Kits",
+  "short_name": "Desk2Door",
+  "description": "Sourcing school supplies and delivering custom kits to homes and schools in Kigali.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#1E3A8A",
+  "orientation": "portrait-primary",
+  "categories": ["education", "shopping"],
+  "icons": [
+    {
+      "src": "./assets/images/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ]
+}

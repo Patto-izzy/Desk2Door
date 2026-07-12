@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A" />
+      <stop offset="100%" stop-color="#10B981" />
+    </linearGradient>
+    <!-- Box Shadow Filter -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Rounded Background Container -->
+  <rect width="512" height="512" rx="120" fill="url(#bgGrad)" />
+
+  <!-- Inner border ring -->
+  <rect x="24" y="24" width="464" height="464" rx="96" fill="none" stroke="#FFFFFF" stroke-width="12" opacity="0.15" />
+
+  <!-- Logo Icon Graphic Group -->
+  <g filter="url(#shadow)">
+    <!-- Stylized isometric box lid bottom -->
+    <path d="M150,290 L256,340 L362,290 L256,240 Z" fill="#FFFFFF" opacity="0.9" />
+    <!-- Box left side -->
+    <path d="M150,290 L150,370 L256,420 L256,340 Z" fill="#E2E8F0" />
+    <!-- Box right side -->
+    <path d="M256,340 L256,420 L362,370 L362,290 Z" fill="#F1F5F9" />
+    
+    <!-- Large stylized letter 'D' representing Desk2Door popping out of the box -->
+    <!-- The letter is designed with clean blocks to feel structured -->
+    <path d="M210,130 H280 C300,130 320,150 320,180 V250 C320,280 300,300 280,300 H210 V130 Z M250,165 V265 H275 C285,265 295,255 295,240 V190 C295,175 285,165 275,165 H250 Z" fill="#FFFFFF" />
+    
+    <!-- Mini green dot representing progress / delivery success -->
+    <circle cx="310" cy="130" r="12" fill="#10B981" stroke="#FFFFFF" stroke-width="3" />
+  </g>
+</svg>
