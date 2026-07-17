@@ -18,7 +18,7 @@ const ASSETS_TO_CACHE = [
   './js/order.js',
   './js/admin.js',
   './manifest.json',
-  './images/logo.png',
+  './images/logo2.jpeg',
   './images/hero_delivery 2.png',
   './images/study_kit.jpg',
   './images/home_essentials.jpg',
