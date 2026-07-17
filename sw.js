@@ -23,7 +23,7 @@ const ASSETS_TO_CACHE = [
   './images/study_kit.jpg',
   './images/home_essentials.jpg',
   './images/office_essentials.jpg',
-  './images/list2door.jpg',
+  './images/list2door2.png',
   './images/gifts.png',
   './images/kitchen.png',
   './images/baby_products.png',
