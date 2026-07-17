@@ -2438,3 +2438,46 @@ img, video, iframe, svg {
     height: auto;
 }
 
+/* ----- Mobile Header Optimizations (iPhone 12 Mini & Small Screens) ----- */
+@media (max-width: 576px) {
+    :root {
+        --header-height: 62px;
+    }
+    
+    .header.scrolled {
+        height: 62px;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+        gap: 6px;
+    }
+    
+    .logo-icon-img {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .header-actions {
+        gap: 6px;
+    }
+    
+    /* Hide the text-heavy secondary button on mobile. The green floating WhatsApp button is already active. */
+    .header-actions .btn-secondary {
+        display: none !important;
+    }
+    
+    .header-actions .btn-primary {
+        font-size: 0.72rem;
+        padding: 0.45rem 0.8rem;
+        border-radius: var(--radius-sm);
+        box-shadow: none; /* Reduce visual noise */
+    }
+    
+    .hamburger {
+        width: 22px;
+        height: 16px;
+    }
+}
+
+
