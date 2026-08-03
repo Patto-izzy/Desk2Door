@@ -306,41 +306,55 @@ document.addEventListener('DOMContentLoaded', () => {
         currentOrders.unshift(newOrder); // Prepend new order
         localStorage.setItem('desk2door_orders', JSON.stringify(currentOrders));
 
-        // 8. Transition to Success screen
+        // 8. Transition to Success screen and construct full WhatsApp order message
         document.getElementById('successOrderId').textContent = orderNumber;
         
-        // Prepare pre-filled WhatsApp alert text
         const waFounderNumber = '250795124101';
         
-        let contextualDetails = '';
+        let categoryDetails = '';
         if (selectedCategory === 'Study') {
-            contextualDetails = `School: ${newOrder.schoolName} (${newOrder.studentClass})
-Study Sourcing Tier: ${newOrder.tier.toUpperCase()} Kit`;
+            categoryDetails = `📚 *Category:* Study Tool Kits
+🏫 *School Name:* ${newOrder.schoolName}
+🎒 *Student Class:* ${newOrder.studentClass}
+🏷️ *Sourcing Tier:* ${newOrder.tier.toUpperCase()} Kit`;
+        } else if (selectedCategory === 'Home') {
+            categoryDetails = `🏠 *Category:* Home Essentials`;
+        } else if (selectedCategory === 'Office') {
+            categoryDetails = `🏢 *Category:* Office Essentials`;
         } else {
-            contextualDetails = `Category: ${selectedCategory.toUpperCase()} Sourcing`;
+            categoryDetails = `📋 *Category:* List2Door (Custom Sourcing)`;
         }
 
-        let listDetailString = '';
+        let listContent = '';
         if (activeInputMethod === 'upload') {
-            listDetailString = `File Attached: ${newOrder.fileName}`;
+            listContent = `📄 *Attached File:* ${newOrder.fileName} (${newOrder.fileSize})`;
         } else {
-            // Get first few items to display in WhatsApp message snippet
-            const snippet = newOrder.typedList.split('\n').slice(0, 3).join(', ');
-            listDetailString = `Typed Items snippet: ${snippet}...`;
+            listContent = `📝 *SHOPPING LIST:*
+${newOrder.typedList}`;
         }
 
-        const rawMessage = `Hello Desk2Door! I just submitted an order request. 
-Order ID: ${orderNumber}
-Customer Name: ${newOrder.parentName}
-${contextualDetails}
-${listDetailString}
+        const rawMessage = `Hello Desk2Door! I have just placed a sourcing order request via your website:
 
-Please review and send me an itemized quote. Thank you!`;
+🆔 *Order ID:* ${orderNumber}
+👤 *Customer Name:* ${newOrder.parentName}
+📞 *Phone / WhatsApp:* ${newOrder.phone}
+${categoryDetails}
+
+${listContent}
+
+📍 *DELIVERY LOCATION:*
+• *Neighborhood:* ${newOrder.sector}
+• *Address Details:* ${newOrder.address}
+
+💳 *Payment Method:* ${newOrder.payment === 'MoMo' ? 'MTN Mobile Money' : (newOrder.payment === 'Bank' ? 'Bank Transfer' : 'Cash on Delivery')}
+💬 *Special Instructions:* ${newOrder.notes || 'None'}
+
+Please review my request and send me an itemized quotation. Thank you!`;
 
         const waUrl = `https://wa.me/${waFounderNumber}?text=${encodeURIComponent(rawMessage)}`;
         document.getElementById('whatsappAlertBtn').setAttribute('href', waUrl);
         
-        // 9. Send Email Notification
+        // 9. Send Email Notification as backup
         if (window.sendEmailNotification) {
             const emailData = {
                 "Order Reference": orderNumber,
@@ -374,5 +388,10 @@ Please review and send me an itemized quote. Thank you!`;
         
         // Scroll to top of section
         document.getElementById('orderSuccessContainer').scrollIntoView({ behavior: 'smooth' });
+
+        // Auto-open WhatsApp after a brief delay so client transitions directly
+        setTimeout(() => {
+            window.open(waUrl, '_blank');
+        }, 400);
     });
 });
