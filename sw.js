@@ -3,7 +3,7 @@
  * Handles: Static asset caching, offline page loading, and active cache updates
  */
 
-const CACHE_NAME = 'desk2door-cache-v1';
+const CACHE_NAME = 'desk2door-cache-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -18,6 +18,12 @@ const ASSETS_TO_CACHE = [
   './js/order.js',
   './js/admin.js',
   './manifest.json',
+  './favicon.ico',
+  './images/favicon-16x16.png',
+  './images/favicon-32x32.png',
+  './images/apple-touch-icon.png',
+  './images/icon-192x192.png',
+  './images/icon-512x512.png',
   './images/logo2.jpeg',
   './images/hero_delivery 2.png',
   './images/study_kit.jpg',

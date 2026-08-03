@@ -10,9 +10,20 @@
   "categories": ["education", "shopping"],
   "icons": [
     {
-      "src": "./assets/images/icon.svg",
-      "type": "image/svg+xml",
-      "sizes": "any",
+      "src": "./images/favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "./images/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./images/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
       "purpose": "any maskable"
     }
   ]
