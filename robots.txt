@@ -1,0 +1,7 @@
+# Desk2Door Robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin.html
+
+# Sitemap location
+Sitemap: https://desk2door.rw/sitemap.xml
