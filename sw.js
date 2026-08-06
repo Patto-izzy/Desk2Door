@@ -3,7 +3,7 @@
  * Handles: Static asset caching, offline page loading, and active cache updates
  */
 
-const CACHE_NAME = 'desk2door-cache-v3';
+const CACHE_NAME = 'desk2door-cache-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -13,6 +13,8 @@ const ASSETS_TO_CACHE = [
   './about.html',
   './contact.html',
   './admin.html',
+  './sitemap.xml',
+  './robots.txt',
   './css/style.css',
   './js/main.js',
   './js/order.js',
