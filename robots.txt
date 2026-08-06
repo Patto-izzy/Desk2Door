@@ -4,4 +4,4 @@ Allow: /
 Disallow: /admin.html
 
 # Sitemap location
-Sitemap: https://desk2door.rw/sitemap.xml
+Sitemap: https://desk2door.vercel.app/sitemap.xml
